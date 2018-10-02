@@ -17,6 +17,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Route::group(['middleware' => ['api']], function (){
+    Route::post('/auth/signup','ApiAuthController@signup');
+//});
+
+Route::middleware('middleware' => ['first'])->group(function () {
+    Route::get('/', function () {
+        // Uses first & second Middleware
+    });
+
+    Route::get('user/profile', function () {
+        // Uses first & second Middleware
+    });
+});
 
 Route::group(['prefix' => '/users'],function (){
 
