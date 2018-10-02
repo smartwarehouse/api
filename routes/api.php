@@ -16,3 +16,27 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::group(['prefix' => '/users'],function (){
+
+    Route::get('/',function (){
+        echo "daftar semua user";
+    });
+
+    Route::get('/{id}',function (){
+        echo "daftar user tertentu";
+    });
+
+    Route::post('/',function (){
+        echo "daftar semua user";
+    });
+
+    Route::put('/{id}',function (){
+        echo "daftar semua user";
+    });
+
+    Route::delete('/{id}',function (){
+        echo "daftar semua user";
+    });
+});
