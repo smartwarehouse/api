@@ -21,35 +21,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::post('/auth/signup','ApiAuthController@signup');
 //});
 
-Route::middleware('middleware' => ['first'])->group(function () {
-    Route::get('/', function () {
-        // Uses first & second Middleware
-    });
 
-    Route::get('user/profile', function () {
-        // Uses first & second Middleware
-    });
-});
+/* * * * * * * * * * * * * * * * * * * * * *
+ * Group Router Untuk Apis
+ * Semua di autentikasi dengan Middleware
+ * * * * * * * * * * * * * * * * * * * * * */
+Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
 
-Route::group(['prefix' => '/users'],function (){
+        // Khusus Untuk Prefix User
+        Route::group(['prefix' => '/users'],function (){
 
-    Route::get('/',function (){
-        echo "daftar semua user";
-    });
+            Route::get('/','ApiUsers@index');
 
-    Route::get('/{id}',function (){
-        echo "daftar user tertentu";
-    });
+            Route::get('/{id}','ApiUsers@show');
 
-    Route::post('/',function (){
-        echo "daftar semua user";
-    });
+            Route::post('/add','ApiUsers@store');
 
-    Route::put('/{id}',function (){
-        echo "daftar semua user";
-    });
+            Route::put('/{id}','ApiUsers@edit');
 
-    Route::delete('/{id}',function (){
-        echo "daftar semua user";
-    });
+            Route::delete('/{id}','ApiUsers@destroy');
+        });
+
 });
