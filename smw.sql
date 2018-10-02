@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2018 at 01:56 PM
+-- Generation Time: Oct 02, 2018 at 09:29 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -154,6 +154,15 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'sembarang', NULL, NULL),
+(2, 'hrd', 'human resource department', NULL, NULL),
+(3, 'we', 'warehouse employee', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -184,6 +193,13 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `full_name`, `email`, `phone_number`, `password`, `role`, `created_at`, `updated_at`) VALUES
+(1, 'nadila wirdatul', 'nadilawh0@gmail.com', 798698, '$2y$10$NOg2.omK0cYc9rx6FVuDquUC4aPCqAkU3NgzUGPieNMfe13LJCNDC', 1, '2018-10-02 14:22:46', '2018-10-02 14:22:46');
 
 --
 -- Indexes for dumped tables
@@ -306,7 +322,7 @@ ALTER TABLE `rfid`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `type`
@@ -318,7 +334,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
