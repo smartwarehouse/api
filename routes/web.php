@@ -22,3 +22,9 @@ Route::get('/dashboard/user/create', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('validate', 'MemberController@validateCredentials');
+Route::get('validate', function()
+{
+    return View::make('members/login');
+});
+
