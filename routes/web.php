@@ -36,9 +36,10 @@ Route::get('/dashboard/user/delete/{id}', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('validate', 'MemberController@validateCredentials');
+Route::post('validate', 'HomeController@validateCredentials');
 Route::get('validate', function()
 {
     return View::make('members/login');
 });
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
