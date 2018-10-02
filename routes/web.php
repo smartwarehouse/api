@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/dashboard/user/create', function () {
     return view('dashboard.user.add');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
