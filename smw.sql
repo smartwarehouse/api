@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2018 at 10:56 AM
+-- Generation Time: Oct 02, 2018 at 02:02 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -36,6 +36,17 @@ CREATE TABLE `location` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`id`, `location_code`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'A290', 'Jalan Sudirman no 30', NULL, NULL),
+(2, 'B896', 'Jalan Patimmura no 39', NULL, NULL),
+(3, 'A279', 'Jalan Hatta no 30', NULL, NULL),
+(4, 'N68', 'Jalan Soekarno no 86', NULL, NULL),
+(5, 'H875', 'Jalan Bung Hatta no 65', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +66,17 @@ CREATE TABLE `material` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `material`
+--
+
+INSERT INTO `material` (`id`, `material_code`, `name`, `qty`, `image`, `rfid`, `location`, `material_category`, `created_at`, `updated_at`) VALUES
+(1, '2872', 'Sabun Lifeboy', 897, 'sabunlifeboy.jpg', 1, 3, 1, NULL, NULL),
+(2, '6757', 'Shampo Head', 87, 'shampohead.jpg', 4, 4, 3, NULL, NULL),
+(3, '786', 'Sabun Lux', 76, 'sabunlux.jpg', 2, 4, 1, NULL, NULL),
+(4, '1667', 'Sabun Dettol', 768, 'dettol.jpg', 4, 1, 1, NULL, NULL),
+(5, '657', 'Baju Karunia Muslim', 276, 'karunia.jpg', 3, 2, 5, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -68,6 +90,17 @@ CREATE TABLE `material_category` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `material_category`
+--
+
+INSERT INTO `material_category` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'sabun', 'sabun cair', NULL, NULL),
+(2, 'detergen', 'detergen wangi', NULL, NULL),
+(3, 'shampo', 'shampo wangi', NULL, NULL),
+(4, 'pasta gigi', 'pasta gigi bikin gigi putih', NULL, NULL),
+(5, 'baju muslim', 'baju muslim cocok untuk wanita berhijab', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -84,6 +117,17 @@ CREATE TABLE `material_statistic` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `material_statistic`
+--
+
+INSERT INTO `material_statistic` (`id`, `qty`, `type`, `user`, `material`, `created_at`, `updated_at`) VALUES
+(1, 86, '1', 2, 3, NULL, NULL),
+(2, 757, '2', 1, 3, NULL, NULL),
+(3, 657, '3', 4, 1, NULL, NULL),
+(4, 65, '3', 3, 4, NULL, NULL),
+(5, 43, '4', 5, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -140,6 +184,17 @@ CREATE TABLE `rfid` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `rfid`
+--
+
+INSERT INTO `rfid` (`id`, `rfid_code`, `created_at`, `updated_at`) VALUES
+(1, '265', NULL, NULL),
+(2, '788', NULL, NULL),
+(3, '467', NULL, NULL),
+(4, '6757', NULL, NULL),
+(5, '654', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -177,6 +232,16 @@ CREATE TABLE `type` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `type`
+--
+
+INSERT INTO `type` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Barang Masuk', 'banyaknya data yang masuk di gudang', NULL, NULL),
+(2, 'Barang Keluar', 'banyaknya data yang keluar di gudang', NULL, NULL),
+(3, 'Barang Return', 'banyaknya barang return di gudang', NULL, NULL),
+(4, 'Barang Kosong', 'banyaknya barang kosong yang ada di gudang', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -194,6 +259,17 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `full_name`, `email`, `phone_number`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'nadila wirdatul', 'nadilawh0@gmail.com', 896896, '$2y$10$FTTwCe9uqMsdKI56rIaAzua1JDx5PAHoIsJfHdZfdMgn3/heiu6Mi', 1, '37zOZLrh0aMMUmwLhAuR6JaDePMseTpdHvcBZWSmF5LBHa06Y89QFcbhE1mf', '2018-10-02 15:57:55', '2018-10-02 15:57:55'),
+(2, 'Efriza Luluk', 'luluk@gmail.com', 82862762, 'efriza', 2, NULL, NULL, NULL),
+(3, 'Fatkul Nur', 'fatkul@gmail.com', 8287628, 'fatkul', 3, NULL, NULL, NULL),
+(4, 'Nasrulloh Muhyiddin', 'nasrul@gmail.com', 89282, 'nasrul', 1, NULL, NULL, NULL),
+(5, 'Rizka Rahayu', 'rizka@gmail.com', 89279872, 'rizka', 2, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -274,25 +350,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `material`
 --
 ALTER TABLE `material`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `material_category`
 --
 ALTER TABLE `material_category`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `material_statistic`
 --
 ALTER TABLE `material_statistic`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -310,7 +386,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `rfid`
 --
 ALTER TABLE `rfid`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -322,13 +398,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `type`
 --
 ALTER TABLE `type`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
