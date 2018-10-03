@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class Dashboard extends Controller
@@ -11,8 +12,13 @@ class Dashboard extends Controller
     }
 public function index()
     {
-        $users=\App\Users::all();
-        return view('Dashboard.users.show',compact('Users'));
+        $users=User::all();
+        return view('dashboard.user.show',['Users' => $users]);
     }
 
+    public function userIndex()
+    {
+        $data=User::all();
+        return view('dashboard.user.show',['users' => $data]);
+    }
 }

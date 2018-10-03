@@ -19,6 +19,24 @@ Route::get('/dashboard/user/create', function () {
     return view('dashboard.user.add');
 });
 
+Route::get('/dashboard/user/show', 'Dashboard@userIndex');
+
+
+Route::get('/dashboard/edit/{id}', function () {
+    return view('dashboard.user.edit');
+});
+
+
+Route::get('/dashboard/user/delete/{id}', function () {
+    return view('dashboard.user.destroy');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('validate', 'MemberController@validateCredentials');
+Route::get('validate', function()
+{
+    return View::make('members/login');
+});
+

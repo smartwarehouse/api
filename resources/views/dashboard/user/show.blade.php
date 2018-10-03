@@ -18,31 +18,20 @@
       <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Date</th>
         <th>Email</th>
         <th>Phone Number</th>
-        <th>Passport Office</th>
         <th colspan="2">Action</th>
       </tr>
     </thead>
     <tbody>
-      
-      @foreach($passports as $passport)
-      @php
-        $date=date('Y-m-d', $passport['date']);
-        @endphp
+
+      @foreach($users as $user)
       <tr>
-        <td>{{$passport['id']}}</td>
-        <td>{{$passport['name']}}</td>
-        <td>{{$date}}</td>
-        <td>{{$passport['email']}}</td>
-        <td>{{$passport['number']}}</td>
-        <td>{{$passport['office']}}</td>
-        
-        <td><a href="{{action('PassportController@edit', $passport['id'])}}" class="btn btn-warning">Edit</a></td>
-        <td>
-          <form action="{{action('PassportController@destroy', $passport['id'])}}" method="post">
-            @csrf
+        <td>{{$user['id']}}</td>
+        <td>{{$user['full_name']}}</td>
+        <td>{{$user['email']}}</td>
+        <td>{{$user['phone_number']}}</td>
+        <td>{{$user['office']}}</td>
             <input name="_method" type="hidden" value="DELETE">
             <button class="btn btn-danger" type="submit">Delete</button>
           </form>
