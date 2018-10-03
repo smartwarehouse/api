@@ -25,4 +25,11 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function validateCredentials()
+    {
+        $email = Input::post('email');
+        $password = Input::post('password');
+        return "Email: " . $email . " and Password: " . $password;
+    }
 }

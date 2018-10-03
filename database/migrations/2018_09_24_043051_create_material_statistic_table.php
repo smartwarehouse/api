@@ -16,7 +16,9 @@ class CreateMaterialStatisticTable extends Migration
         Schema::create('material_statistic', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('qty');
-            $table->string('type');
+            $table->foreign('type')
+                ->references('id')->on('type')
+                ->onDelete('cascade');
             $table->unsignedInteger('user');
             $table->foreign('user')
                 ->references('id')->on('users')
