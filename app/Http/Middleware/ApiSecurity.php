@@ -15,6 +15,7 @@ class ApiSecurity
      */
     public function handle($request, Closure $next)
     {
+        //echo 'ini sebelumnya';
         return $next($request);
     }
 }

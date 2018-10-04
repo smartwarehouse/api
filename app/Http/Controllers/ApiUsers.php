@@ -21,16 +21,17 @@ class ApiUsers extends Controller
 
         if(!$result){
             return response()->json([
-                'status'    => 'true',
-                'message' => 'error , no data'
-            ],404);
+                'status'    => false,
+                'message'   => 'error , no data'
+            ],401);
         }else{
-            return $result;
+            return response()->json($result,200);
         }
     }
 
     public function store(Request $request){
-        $this->validate($request,[
+        //die('aaaaaaa');
+        $result = $this->validate($request,[
             'full_name'     => 'required',
             'email'         => 'required|unique:users',
             'phone_number'  => 'required',
@@ -38,44 +39,75 @@ class ApiUsers extends Controller
             'role'          => 'required',
         ]);
 
+        //die(print_r($result));
 
-        $data                   = new User;
-        $data->full_name        = $request->full_name;
-        $data->email            = $request->email;
-        $data->phone_number     = $request->phone_number;
-        $data->role             = $request->role;
-        $data->password         = Hash::make($request->password);
-        $data->save();
+        if($result){
+            $data                   = new User;
+            $data->full_name        = $request->full_name;
+            $data->email            = $request->email;
+            $data->phone_number     = $request->phone_number;
+            $data->role             = $request->role;
+            $data->password         = Hash::make($request->password);
+            $data->save();
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Insert Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'   => false,
+                'message' => 'error , Insert Not Success'
+            ],404);
+        }
+    }
+
+    public function tesPost(Request $request){
+        echo 'aaaa';
+        echo $request->nama;
     }
 
     public function update(Request $request,$id){
-        $this->validate($request,[
+        $result = $this->validate($request,[
             'full_name'     => 'required',
-            'email'         => 'required|unique:users',
+            'email'         => 'required',
             'phone_number'  => 'required',
             'password'      => 'required',
-            'role'      => 'required',
+            'role'          => 'required',
         ]);
+        if($result){
+            $data = User::find($id);
+            $data->full_name    = $request->full_name;
+            $data->email        = $request->email;
+            $data->phone_number = $request->phone_number;
+            $data->password     = $request->password;
+            $data->role         = $request->role;
+            $data->save();
 
-        $data = User::find($id);
-        $data->full_name    = $request->title;
-        $data->email        = $request->email;
-        $data->phone_number = $request->phone_number;
-        $data->password     = $request->password;
-        $data->role         = $request->role;
-        $data->save();
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Update Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'  => false,
+                'message' => 'error , no data'
+            ],404);
+        }
     }
 
     public function destroy($id){
-        $result = User::find($id)->delete();
+        $result = User::find($id);
         if($result){
+            $result->delete();
             return response()->json([
                 'status'    => 'true',
                 'message'   => 'Delete Successfuly'
             ],200);
         }else{
             return response()->json([
-                'status' => 'error , no data'
+                'status' => 'false',
+                'message'=> 'data not found'
             ],404);
         }
     }
