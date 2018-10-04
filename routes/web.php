@@ -19,9 +19,7 @@ Route::get('/dashboard/user/create', function () {
     return view('dashboard.user.add');
 });
 
-Route::get('/dashboard/user/show', function () {
-    return view('dashboard.user.show');
-});
+Route::get('/dashboard/user/show', 'Dashboard@userIndex');
 
 
 Route::get('/dashboard/edit/{id}', function () {
