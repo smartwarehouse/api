@@ -30,7 +30,6 @@ class ApiUsers extends Controller
     }
 
     public function store(Request $request){
-        //die('aaaaaaa');
         $result = $this->validate($request,[
             'full_name'     => 'required',
             'email'         => 'required|unique:users',
@@ -38,8 +37,6 @@ class ApiUsers extends Controller
             'password'      => 'required',
             'role'          => 'required',
         ]);
-
-        //die(print_r($result));
 
         if($result){
             $data                   = new User;
@@ -60,11 +57,6 @@ class ApiUsers extends Controller
                 'message' => 'error , Insert Not Success'
             ],404);
         }
-    }
-
-    public function tesPost(Request $request){
-        echo 'aaaa';
-        echo $request->nama;
     }
 
     public function update(Request $request,$id){
@@ -91,7 +83,7 @@ class ApiUsers extends Controller
         }else{
             return response()->json([
                 'status'  => false,
-                'message' => 'error , no data'
+                'message'=> 'update not success'
             ],404);
         }
     }
@@ -107,7 +99,7 @@ class ApiUsers extends Controller
         }else{
             return response()->json([
                 'status' => 'false',
-                'message'=> 'data not found'
+                'message'=> 'delete not success'
             ],404);
         }
     }

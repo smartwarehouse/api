@@ -27,23 +27,35 @@ use Illuminate\Http\Request;
  * Semua di autentikasi dengan Middleware
  * * * * * * * * * * * * * * * * * * * * * */
 //Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
-//Route::group(['middleware' => 'apisecurity'], function() {
-Route::group(['prefix' => ''], function() {
+Route::group(['middleware' => 'apisecurity'], function() {
+//Route::group(['prefix' => ''], function() {
 
-        // Khusus Untuk Prefix User
-        Route::group(['prefix' => '/users'],function (){
+    // api user
+    Route::group(['prefix' => '/users'],function (){
 
-            Route::get('','ApiUsers@index');
+        Route::get('','ApiUsers@index');
 
-            Route::get('/{id}','ApiUsers@show');
+        Route::get('/{id}','ApiUsers@show');
 
-            Route::post('/store','ApiUsers@store');
+        Route::post('/','ApiUsers@store');
 
-            Route::post('/tes','ApiUsers@tesPost');
+        Route::put('/{id}','ApiUsers@update');
 
-            Route::post('/{id}','ApiUsers@update');
+        Route::delete('/{id}','ApiUsers@destroy');
+    });
 
-            Route::delete('/{id}','ApiUsers@destroy');
-        });
+    // api Role
+    Route::group(['prefix' => '/roles'],function (){
+
+        Route::get('','ApiRoles@index');
+
+        Route::get('/{id}','ApiRoles@show');
+
+        Route::post('/','ApiRoles@store');
+
+        Route::put('/{id}','ApiRoles@update');
+
+        Route::delete('/{id}','ApiRoles@destroy');
+    });
 
 });
