@@ -31,7 +31,18 @@ class ApiRoles extends Controller
     }
 
     public function store(Request $request){
-        return Roles::create($request->all());
+        if(Roles::create($request->all())){
+
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Insert Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'   => false,
+                'message' => 'error , Insert Not Success'
+            ],404);
+        }
     }
 
     public function update(Request $request,$id){
@@ -51,9 +62,13 @@ class ApiRoles extends Controller
     }
 
     public function destroy($id){
-        $result = Roles::find($id)->delete();
+
+        $result = Roles::find($id);
 
         if($result){
+
+            Roles::find($id)->delete();
+
             return response()->json([
                 'status'    => true,
                 'message'   => 'Delete Successfuly'
