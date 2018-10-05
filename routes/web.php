@@ -27,9 +27,7 @@ Route::get('/dashboard/edit/{id}', function () {
 });
 
 
-Route::get('/dashboard/user/delete/{id}', function () {
-    return view('dashboard.user.destroy');
-});
+Route::get('/dashboard/user/delete/{id}', 'Dashboard@userDestroy');
 
 Auth::routes();
 

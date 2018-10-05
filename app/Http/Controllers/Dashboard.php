@@ -10,25 +10,27 @@ class Dashboard extends Controller
     public function userAdd(){
 
     }
-<<<<<<< HEAD
-public function index()
-    {
-        $users=User::all();
-        return view('dashboard.user.show',['Users' => $users]);
-    }
+    public function index()
+        {
+            $users=User::all();
+            return view('dashboard.user.show',['Users' => $users]);
+        }
 
-    public function userIndex()
+        public function userIndex()
+        {
+            $data=User::all();
+            return view('dashboard.user.show',['users' => $data]);
+        }
+
+    public function userDestroy($id)
     {
-        $data=User::all();
-        return view('dashboard.user.show',['users' => $data]);
+        $result =   User::find($id);
+        if($result){
+            User::find($id)->delete();
+            $data = "delete success";
+        }else{
+            $data = "delete not success";
+        }
+        return view('dashboard.user.destroy',['message' => $data]);
     }
 }
-=======
-
-    public function userIndex()
-    {
-        $data = User::all();
-        return view('dashboard.user.show',compact('data'));
-    }
-}
->>>>>>> 60aad49d563f58dce5caeab437fa9fb423bbe71e
