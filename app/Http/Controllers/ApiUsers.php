@@ -22,30 +22,15 @@ class ApiUsers extends Controller
         if(!$result){
             return response()->json([
                 'status'    => false,
-                'message'   => 'error , no data'
-            ],401);
+                'message' => 'error , no data'
+            ],404);
         }else{
-            return response()->json($result,200);
+            return $result;
         }
     }
 
     public function store(Request $request){
-        $result = $this->validate($request,[
-            'full_name'     => 'required',
-            'email'         => 'required|unique:users',
-            'phone_number'  => 'required',
-            'password'      => 'required',
-            'role'          => 'required',
-        ]);
-
-        if($result){
-            $data                   = new User;
-            $data->full_name        = $request->full_name;
-            $data->email            = $request->email;
-            $data->phone_number     = $request->phone_number;
-            $data->role             = $request->role;
-            $data->password         = Hash::make($request->password);
-            $data->save();
+        if(User::create($request->all())){
 
             return response()->json([
                 'status'    => true,
@@ -60,22 +45,9 @@ class ApiUsers extends Controller
     }
 
     public function update(Request $request,$id){
-        $result = $this->validate($request,[
-            'full_name'     => 'required',
-            'email'         => 'required',
-            'phone_number'  => 'required',
-            'password'      => 'required',
-            'role'          => 'required',
-        ]);
-        if($result){
-            $data = User::find($id);
-            $data->full_name    = $request->full_name;
-            $data->email        = $request->email;
-            $data->phone_number = $request->phone_number;
-            $data->password     = $request->password;
-            $data->role         = $request->role;
-            $data->save();
+        $result = User::findOrFail($id);
 
+        if($result->update($request->all())){
             return response()->json([
                 'status'    => true,
                 'message'   => 'Update Successfuly'
@@ -89,11 +61,15 @@ class ApiUsers extends Controller
     }
 
     public function destroy($id){
+
         $result = User::find($id);
+
         if($result){
-            $result->delete();
+
+            User::find($id)->delete();
+
             return response()->json([
-                'status'    => 'true',
+                'status'    => true,
                 'message'   => 'Delete Successfuly'
             ],200);
         }else{

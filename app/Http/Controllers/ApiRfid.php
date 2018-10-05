@@ -22,7 +22,7 @@ class ApiRfid extends Controller
 
         if(!$result){
             return response()->json([
-                'status'    => 'true',
+                'status'    => false,
                 'message' => 'error , no data'
             ],404);
         }else{
@@ -31,36 +31,52 @@ class ApiRfid extends Controller
     }
 
     public function store(Request $request){
-        $this->validate($request,[
-            'rfid_code'         => 'required|unique:rfid',
-        ]);
+        if(Rfid::create($request->all())){
 
-
-        $data                   = new User;
-        $data->rfid_code        = $request->rfid_code;
-        $data->save();
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Insert Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'   => false,
+                'message' => 'error , Insert Not Success'
+            ],404);
+        }
     }
 
     public function update(Request $request,$id){
-        $this->validate($request,[
-            'rfid_code'     => 'required',
-        ]);
+        $result = Rfid::findOrFail($id);
 
-        $data = Rfid::find($id);
-        $data->rfid_code        = $request->rfid_code;
-        $data->save();
+        if($result->update($request->all())){
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Update Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'  => false,
+                'message'=> 'update not success'
+            ],404);
+        }
     }
 
     public function destroy($id){
-        $result = Rfid::find($id)->delete();
+
+        $result = Rfid::find($id);
+
         if($result){
+
+            Rfid::find($id)->delete();
+
             return response()->json([
-                'status'    => 'true',
+                'status'    => true,
                 'message'   => 'Delete Successfuly'
             ],200);
         }else{
             return response()->json([
-                'status' => 'error , no data'
+                'status' => 'false',
+                'message'=> 'delete not success'
             ],404);
         }
     }

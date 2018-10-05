@@ -22,7 +22,7 @@ class ApiMaterial extends Controller
 
         if(!$result){
             return response()->json([
-                'status'    => 'true',
+                'status'    => false,
                 'message' => 'error , no data'
             ],404);
         }else{
@@ -31,60 +31,52 @@ class ApiMaterial extends Controller
     }
 
     public function store(Request $request){
-        $this->validate($request,[
-            'material_code'     => 'required|unique:material',
-            'name'              => 'required',
-            'qty'               => 'required',
-            'image'             => 'required',
-            'rfid'              => 'required',
-            'location'          => 'required',
-            'material_category' => 'required',
-        ]);
+        if(Material::create($request->all())){
 
-
-        $data                       = new Material;
-        $data->material_code        = $request->material_code;
-        $data->name                 = $request->name;
-        $data->qty                  = $request->qty;
-        $data->image                = $request->image;
-        $data->rfid                 = $request->rfid;
-        $data->location             = $request->location;
-        $data->material_category    = $request->material_category;
-        $data->save();
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Insert Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'   => false,
+                'message' => 'error , Insert Not Success'
+            ],404);
+        }
     }
 
     public function update(Request $request,$id){
-        $this->validate($request,[
-            'material_code'     => 'required|unique:material',
-            'name'              => 'required',
-            'qty'               => 'required',
-            'image'             => 'required',
-            'rfid'              => 'required',
-            'location'          => 'required',
-            'material_category' => 'required',
-        ]);
+        $result = Material::findOrFail($id);
 
-        $data = User::find($id);
-        $data->material_code        = $request->material_code;
-        $data->name                 = $request->name;
-        $data->qty                  = $request->qty;
-        $data->image                = $request->image;
-        $data->rfid                 = $request->rfid;
-        $data->location             = $request->location;
-        $data->material_category    = $request->material_category;
-        $data->save();
+        if($result->update($request->all())){
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Update Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'  => false,
+                'message'=> 'update not success'
+            ],404);
+        }
     }
 
     public function destroy($id){
-        $result = Material::find($id)->delete();
+
+        $result = Material::find($id);
+
         if($result){
+
+            Material::find($id)->delete();
+
             return response()->json([
-                'status'    => 'true',
+                'status'    => true,
                 'message'   => 'Delete Successfuly'
             ],200);
         }else{
             return response()->json([
-                'status' => 'error , no data'
+                'status' => 'false',
+                'message'=> 'delete not success'
             ],404);
         }
     }

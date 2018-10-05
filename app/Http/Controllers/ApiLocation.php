@@ -22,7 +22,7 @@ class ApiLocation extends Controller
 
         if(!$result){
             return response()->json([
-                'status'    => 'true',
+                'status'    => false,
                 'message' => 'error , no data'
             ],404);
         }else{
@@ -31,40 +31,52 @@ class ApiLocation extends Controller
     }
 
     public function store(Request $request){
-        $this->validate($request,[
-            'location_code' => 'required|unique:location',
-            'description'  => 'required',
-        ]);
+        if(Location::create($request->all())){
 
-
-        $data                   = new Location;
-        $data->location_code        = $request->location_code;
-        $data->description          = $request->description;
-        $data->save();
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Insert Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'   => false,
+                'message' => 'error , Insert Not Success'
+            ],404);
+        }
     }
 
     public function update(Request $request,$id){
-        $this->validate($request,[
-            'location_code'     => 'required',
-            'description'         => 'required|unique:users',
-        ]);
+        $result = Location::findOrFail($id);
 
-        $data = Location::find($id);
-        $data->location_code    = $request->location_code;
-        $data->description      = $request->description;
-        $data->save();
+        if($result->update($request->all())){
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Update Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'  => false,
+                'message'=> 'update not success'
+            ],404);
+        }
     }
 
     public function destroy($id){
-        $result = Location::find($id)->delete();
+
+        $result = Location::find($id);
+
         if($result){
+
+            Location::find($id)->delete();
+
             return response()->json([
-                'status'    => 'true',
+                'status'    => true,
                 'message'   => 'Delete Successfuly'
             ],200);
         }else{
             return response()->json([
-                'status' => 'error , no data'
+                'status' => 'false',
+                'message'=> 'delete not success'
             ],404);
         }
     }

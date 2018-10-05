@@ -22,7 +22,7 @@ class ApiType extends Controller
 
         if(!$result){
             return response()->json([
-                'status'    => 'true',
+                'status'    => false,
                 'message' => 'error , no data'
             ],404);
         }else{
@@ -31,40 +31,52 @@ class ApiType extends Controller
     }
 
     public function store(Request $request){
-        $this->validate($request,[
-            'name'          => 'required',
-            'description'   => 'required',
-        ]);
+        if(Type::create($request->all())){
 
-
-        $data                = new Type;
-        $data->name          = $request->name;
-        $data->description   = $request->description;
-        $data->save();
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Insert Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'   => false,
+                'message' => 'error , Insert Not Success'
+            ],404);
+        }
     }
 
     public function update(Request $request,$id){
-        $this->validate($request,[
-            'name'          => 'required',
-            'description'   => 'required',
-        ]);
+        $result = Type::findOrFail($id);
 
-        $data = User::find($id);
-        $data->name          = $request->name;
-        $data->description   = $request->description;
-        $data->save();
+        if($result->update($request->all())){
+            return response()->json([
+                'status'    => true,
+                'message'   => 'Update Successfuly'
+            ],200);
+        }else{
+            return response()->json([
+                'status'  => false,
+                'message'=> 'update not success'
+            ],404);
+        }
     }
 
     public function destroy($id){
-        $result = Type::find($id)->delete();
+
+        $result = Type::find($id);
+
         if($result){
+
+            Type::find($id)->delete();
+
             return response()->json([
-                'status'    => 'true',
+                'status'    => true,
                 'message'   => 'Delete Successfuly'
             ],200);
         }else{
             return response()->json([
-                'status' => 'error , no data'
+                'status' => 'false',
+                'message'=> 'delete not success'
             ],404);
         }
     }
