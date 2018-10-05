@@ -32,8 +32,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
 //Route::group(['prefix' => ''], function() {
 
+// 'auth:api'
+Route::group(['middleware' => 'auth:api','apisecurity'], function() {
 
-Route::group(['middleware' => 'apisecurity'], function() {
+    Route::post('details', 'ApiAuthController@details');
+
     // api Location
     Route::group(['prefix' => '/locations'],function (){
         Route::get('','ApiLocation@index');

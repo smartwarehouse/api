@@ -32,7 +32,6 @@ class ApiRoles extends Controller
 
     public function store(Request $request){
         if(Roles::create($request->all())){
-
             return response()->json([
                 'status'    => true,
                 'message'   => 'Insert Successfuly'
@@ -46,7 +45,10 @@ class ApiRoles extends Controller
     }
 
     public function update(Request $request,$id){
-        $result = Roles::findOrFail($id);
+        $result = Roles::find($id);
+//        $result = Roles::findOrFail($id);
+
+//        return $result;
 
         if($result->update($request->all())){
             return response()->json([

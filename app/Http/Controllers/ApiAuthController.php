@@ -40,11 +40,8 @@ class ApiAuthController extends Controller
             'email'         => 'required|email',
             'phone_number'  => 'required',
             'role'          => 'required',
-            'password'      => 'required',
-//            'c_password' => 'required|same:password',
+            'password'      => 'required'
         ]);
-
-        return $validator->errors();
 
         if ($validator->fails()) {
             return response()->json([

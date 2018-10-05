@@ -12,3 +12,12 @@ Project Ini Masih Tahan Pembuatan
 - Insomnia (Api Testing)
 - Postman (Api Testing)
 - PhpUnitTest (Code Bug Tes)
+
+
+**Cara Menggunakan**
+~~~
+Buat database 
+Setting .env
+Jalankan "composer update"
+Jalankan perintah "php artisan passport:install"
+~~~
