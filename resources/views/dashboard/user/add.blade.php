@@ -5,13 +5,10 @@
     <section class="main-section">
         <!-- Add Your Content Inside -->
         <div class="content">
-            <!-- Remove This Before You Start -->
-            <h1>Anak IT -  Tambah Kontak</h1>
-            <hr>
             <form action="{{ route('dashboard.userAdd') }}" method="post">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <label for="nama">Nama:</label>
+                    <label for="nama">Full Nama:</label>
                     <input type="text" class="form-control" id="usr" name="nama">
                 </div>
                 <div class="form-group">

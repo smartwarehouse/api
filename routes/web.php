@@ -19,6 +19,8 @@ Route::get('/dashboard/user/create', function () {
     return view('dashboard.user.add');
 });
 
+Route::post('/dashboard/user/store', 'Dashboard@userStore');
+
 Route::get('/dashboard/user/show', 'Dashboard@userIndex');
 
 
