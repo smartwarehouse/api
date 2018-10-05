@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2018 at 02:02 PM
+-- Generation Time: Oct 05, 2018 at 11:50 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -45,7 +45,8 @@ INSERT INTO `location` (`id`, `location_code`, `description`, `created_at`, `upd
 (2, 'B896', 'Jalan Patimmura no 39', NULL, NULL),
 (3, 'A279', 'Jalan Hatta no 30', NULL, NULL),
 (4, 'N68', 'Jalan Soekarno no 86', NULL, NULL),
-(5, 'H875', 'Jalan Bung Hatta no 65', NULL, NULL);
+(5, 'H875', 'Jalan Bung Hatta no 65', NULL, NULL),
+(6, 'N2203', 'Jl tfcfctfgvgyb', '2018-10-05 16:44:16', '2018-10-05 16:44:16');
 
 -- --------------------------------------------------------
 
@@ -350,7 +351,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `material`
