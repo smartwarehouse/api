@@ -13,13 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-//
-////Route::group(['middleware' => ['api']], function (){
+Route::post('login', 'ApiAuthController@login');
+Route::post('register', 'ApiAuthController@register');
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+//Route::group(['middleware' => ['api']], function (){
 //    Route::post('/auth/signup','ApiAuthController@signup');
-////});
+//});
 
 
 /* * * * * * * * * * * * * * * * * * * * * *
@@ -102,7 +105,5 @@ Route::group(['middleware' => 'apisecurity'], function() {
         Route::put('/{id}','ApiUsers@update');
         Route::delete('/{id}','ApiUsers@destroy');
     });
-
-
 
 });

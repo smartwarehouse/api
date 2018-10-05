@@ -31,7 +31,6 @@ class ApiUsers extends Controller
 
     public function store(Request $request){
         if(User::create($request->all())){
-
             return response()->json([
                 'status'    => true,
                 'message'   => 'Insert Successfuly'

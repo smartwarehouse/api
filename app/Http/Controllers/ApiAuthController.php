@@ -1,64 +1,73 @@
 <?php
-/*
- * Generate by fatkul nur k
- */
+
 namespace App\Http\Controllers;
 
-use App\Roles;
-use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ApiAuthController extends Controller
 {
 
-    public function authenticate(Request $request)
-    {
-        // grab credentials from the request
-        $credentials = $request->only('email', 'password');
+    public $successStatus = 200;
 
-        try {
-            // attempt to verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['error' => 'could_not_create_token'], 500);
+    public function login(){
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+            $user = Auth::user();
+//            $success['token'] =  $user->createToken('nApp')->accessToken;
+            return response()->json([
+                'status'    => true,
+                'message'   => 'login succesfully',
+                'token'     => $user->createToken('nApp')->accessToken,
+            ], $this->successStatus);
+        }
+        else{
+            return response()->json([
+                'status'     => false,
+                'message'   =>  'Unauthorized'
+            ], 401);
+        }
+    }
+
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'full_name'     => 'string|max:255',
+            'email'         => 'required|string|email|max:255|unique:users',
+            'phone_number'  => 'required|string|max:255',
+            'role'          => 'required|int',
+            'password'      => 'required|string|min:6|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'    => false,
+                'message'   => 'Register Failed',
+                'details'     => $validator->errors()
+            ], 401);
         }
 
-        // all good so return the token
-        return response()->json(compact('token'));
+        $input                  = $request->all();
+        $input['password']      = bcrypt($input['password']);
+        $user                   = User::create($input);
+        $success['token']       =  $user->createToken('nApp')->accessToken;
+        $success['name']        =  $user->name;
+
+        return response()->json([
+            'status'    => true,
+            'message'   => 'Register Success',
+            'token'     => $user->createToken('nApp')->accessToken,
+            'name'      => $user->name,
+        ], $this->successStatus);
     }
 
-    public function signup(Request $request){
-        $this->validate($request, [
-            'full_name'     => 'required',
-            'email'         => 'required|unique:users',
-            'phone_number'  => 'required',
-            'password'      => 'required',
-        ]);
-
-        /*
-        $result = User::create([
-            'full_name'      => $request->full_name,
-            'email'          => $request->email,
-            'phone_number'   => $request->phone_number,
-            'password'       => $request->password,
-//           'full_name'      => $request->json('full_name'),
-//           'email'          => $request->json('email'),
-//           'phone_number'   => $request->json('phone_number'),
-//           'password'       => $request->json('password'),
-//           'roles'          => Roles::where('role','we'),
-           'roles'          => 1,
-           'created_at'      => time(),
-           'updated_at'      => time(),
-        ]);
-
-        return response()->json($result);
-        */
+    public function details()
+    {
+        $user = Auth::user();
+        return response()->json(['success' => $user], $this->successStatus);
     }
-
 }
