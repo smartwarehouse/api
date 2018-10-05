@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class Dashboard extends Controller
 {
-    public function userAdd(Request $request, $id)
+    public function userAdd(Request $request)
     {
-        $data = new User->find($id);
+        $data = new User;
         $data->full_name     = $request->full_name;
         $data->email         = $request->email;
         $data->phone_number  = $request->phone_number;
