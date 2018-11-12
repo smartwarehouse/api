@@ -8,5 +8,14 @@ class Material extends Model
 {
     protected $table = 'material';
 
-    protected $fillable     = ['material_code','name','qty','image','rfid','location','material_category'];
+    protected $fillable     = [
+        'material_code',
+        'name',
+        'price',
+        'qty',
+        'image',
+        'rfid',
+        'location',
+        'material_category'
+    ];
 }

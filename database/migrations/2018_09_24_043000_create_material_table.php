@@ -17,6 +17,7 @@ class CreateMaterialTable extends Migration
             $table->increments('id');
             $table->string('material_code');
             $table->string('name');
+            $table->float('price');
             $table->integer('qty');
             $table->string('image');
             $table->unsignedInteger('rfid');

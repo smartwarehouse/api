@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,26 +15,55 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('login', 'ApiAuthController@login');
-Route::post('register', 'ApiAuthController@register');
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// routing api home
+Route::get('',function (){
+    return response()->json([
+        'status'    => true,
+        'message' => 'Halo selamat datang di End Point api dari '.getenv('APP_NAME'),
+        'documentation' => 'maaf belum bisa kami publish hanya untuk kepentingan team.',
+        'pages' => [
+            'login'     => [
+                'endpoint'  => getenv('APP_URL').'api/login',
+                'method'    => 'POST',
+                'parameter' => 'email & password',
+                'status'    => 'open',
+            ],
+            'register'      => [
+                'endpoint'  => getenv('APP_URL').'api/register',
+                'method'    => 'POST',
+                'parameter' => '-',
+                'status'    => 'close',
+            ],
+            'details'       => [
+                'endpoint'  => getenv('APP_URL').'api/detail',
+                'method'    => 'POST',
+                'parameter' => 'token',
+                'status'    => 'close',
+            ],
+        ],
+        'copyright'     => '&copy; '.date('Y').' '.getenv('APP_NAME'),
+    ],200);
 });
 
-//Route::group(['middleware' => ['api']], function (){
-//    Route::post('/auth/signup','ApiAuthController@signup');
-//});
+Route::get('/date',function (){
+//    return Carbon::today();
+    return;
+});
 
+// Untuk Login Api agar dapat token
+Route::post('login', 'ApiAuthController@login');
+
+// Untuk Daftar User Baru
+Route::post('register', 'ApiAuthController@register');
+
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 /* * * * * * * * * * * * * * * * * * * * * *
  * Group Router Untuk Apis
  * Semua di autentikasi dengan Middleware
  * * * * * * * * * * * * * * * * * * * * * */
-//Route::group(['prefix' => '', 'middleware' => 'auth'], function() {
-//Route::group(['prefix' => ''], function() {
-
-// 'auth:api'
 Route::group(['middleware' => 'auth:api','apisecurity'], function() {
 
     Route::post('details', 'ApiAuthController@details');
@@ -71,6 +102,53 @@ Route::group(['middleware' => 'auth:api','apisecurity'], function() {
         Route::post('/','ApiMaterialStatistic@store');
         Route::put('/{id}','ApiMaterialStatistic@update');
         Route::delete('/{id}','ApiMaterialStatistic@destroy');
+    });
+
+    // api Chart
+    Route::group(['prefix' => '/charts'],function (){
+        Route::get('','ApiChart@index');
+
+        //grup barang return
+        Route::group(['prefix' => 'return'],function(){
+            Route::get('','ApiChart@return');
+            Route::get('/limit/{limit}','ApiChart@returnLimit');
+            Route::get('/month','ApiChart@returnMonth');
+            Route::get('/year','ApiChart@returnYear');
+            Route::get('/month/{limit}','ApiChart@returnMonthLimit');
+            Route::get('/year/{limit}','ApiChart@returnYearLimit');
+            Route::get('/date/{date}','ApiChart@returnDate');
+            Route::get('/range/{one}/{two}','ApiChart@returnRange');
+        });
+
+        //grup barang terlaris
+        Route::group(['prefix' => 'most-wanted'],function(){
+            Route::get('','ApiChart@mostWanted');
+            Route::get('/limit/{limit}','ApiChart@mostWantedLimit');
+            Route::get('/month','ApiChart@mostWantedMonth');
+            Route::get('/year','ApiChart@mostWantedYear');
+            Route::get('/month/{limit}','ApiChart@mostWantedMonthLimit');
+            Route::get('/year/{limit}','ApiChart@mostWantedYearLimit');
+            Route::get('/date/{date}','ApiChart@mostWantedDate');
+            Route::get('/range/{one}/{two}','ApiChart@mostWantedMonthRange');
+        });
+
+        //grup barang berdasarkan tanggal tertentu
+        Route::group(['prefix' => 'by-date'],function(){
+            Route::get('','ApiChart@byDate');
+            Route::get('/type/{id}','ApiChart@byDateType');
+            Route::get('/material/{id}','ApiChart@byDateMaterial');
+        });
+
+        //grup barang tertentu
+        Route::group(['prefix' => 'material'],function(){
+            Route::get('/{id}','ApiChart@material');
+            Route::get('/{id}/{limit}','ApiChart@materialLimit');
+            Route::get('/{id}/type/{type}','ApiChart@materialType');
+            Route::get('/{id}/date/{date}','ApiChart@materialRange');
+            Route::get('/{id}/range/{one}/{two}','ApiChart@return');
+        });
+
+
     });
 
     // api rfid

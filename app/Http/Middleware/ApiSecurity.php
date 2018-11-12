@@ -21,9 +21,10 @@ class ApiSecurity
 
         // ALLOW OPTIONS METHOD
         $headers = [
-//            'Access-Control-Allow-Methods'=> 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Methods'=> '*',
-            'Access-Control-Allow-Headers'=> 'Content-Type, X-Auth-Token, Origin, Authorization'
+            'Access-Control-Allow-Methods'=> 'POST, GET, OPTIONS, PUT, DELETE',
+//            'Access-Control-Allow-Methods'=> '*',
+//            'Access-Control-Allow-Headers'=> '*'
+            'Access-Control-Allow-Headers'=> 'Content-Type, X-Auth-Token, Origin, Authorization, Accept'
         ];
 
         if($request->getMethod() == "OPTIONS") {

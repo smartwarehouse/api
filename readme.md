@@ -21,3 +21,10 @@ Setting .env
 Jalankan "composer update"
 Jalankan perintah "php artisan passport:install"
 ~~~
+
+**Request Api**
+Header
+
+- Authorization = Bearer
+- Accept = application/json
+- Content-Type = wkkwkwkwkw

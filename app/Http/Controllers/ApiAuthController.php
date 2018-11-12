@@ -61,7 +61,6 @@ class ApiAuthController extends Controller
             'status'    => true,
             'message'   => 'Register Success',
             'token'     => $user->createToken('nApp')->accessToken,
-            'name'      => $user->name,
         ], $this->successStatus);
     }
 
@@ -70,4 +69,14 @@ class ApiAuthController extends Controller
         $user = Auth::user();
         return response()->json(['success' => $user], $this->successStatus);
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
+
 }
